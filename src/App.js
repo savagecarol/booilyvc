@@ -1,22 +1,41 @@
-import { useState } from "react";
-import { Button } from "@material-ui/core";
-import VideoCall from "./VideoCall";
+import { useState , useRef} from "react";
+import { Button, TextField } from "@material-ui/core";
+import VideoCall from "./components/VideoCall";
+import "./App.css";
+import { channelName } from "./settings";
+
 
 function App() {
   const [inCall, setInCall] = useState(false);
+  const textRef = useRef("");
+  const handleSubmit = () =>
+  {
+    Window.channelName = textRef.current.value;
+    console.log(channelName);
+    setInCall(true);
+  };
 
   return (
-    <div className="App" style={{ height: "100%" }}>
+    <div className="App">
       {inCall ? (
-        <VideoCall setInCall={setInCall} />
+        <VideoCall setInCall= {setInCall}  />
       ) : (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setInCall(true)}
-        >
-          Join Call
-        </Button>
+        <div className="container">
+          <div className = "inside-Container">
+            <h1> Booily Video Calling </h1>
+            <div className = "deep-inside-Container"> 
+            <TextField
+              id="text"
+              variant="filled" 
+              label="Channel Name"
+              margin="normal" 
+              color = "secondary"  
+              inputRef = {textRef}
+            />
+            <Button variant="contained" color="secondary" onClick={handleSubmit} >Join Call </Button>
+          </div>
+          </div>
+        </div>
       )}
     </div>
   );
